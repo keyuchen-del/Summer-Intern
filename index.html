@@ -1,257 +1,364 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2026暑期实习信息汇总</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>公众号每日推送整理与提炼</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b 45%, #334155);
+      color: #0f172a;
       min-height: 100vh;
-      padding: 20px;
+      padding: 24px;
     }
-    .container { max-width: 1200px; margin: 0 auto; }
-    header { text-align: center; color: white; margin-bottom: 30px; padding: 20px 0; }
-    header h1 { font-size: 2.2rem; margin-bottom: 8px; }
-    header p { opacity: 0.8; font-size: 1rem; }
-    
-    .stats { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-    .stat-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 12px 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.2); }
-    .stat-card .number { font-size: 1.8rem; font-weight: bold; color: #4fc3f7; }
-    .stat-card .label { color: rgba(255,255,255,0.7); font-size: 0.8rem; }
-    
-    .update-time { text-align: center; color: rgba(255,255,255,0.7); margin-bottom: 20px; font-size: 0.9rem; }
-    
-    .filters { background: rgba(255,255,255,0.95); padding: 20px; border-radius: 16px; margin-bottom: 20px; }
-    .filters h3 { margin-bottom: 12px; color: #1a1a2e; font-size: 1.1rem; }
-    .filter-section { margin-bottom: 12px; }
-    .filter-section:last-child { margin-bottom: 0; }
-    .filter-section-title { font-size: 0.8rem; color: #666; margin-bottom: 8px; font-weight: 600; }
-    .filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
-    .filter-btn {
-      padding: 6px 14px; border: 2px solid #4fc3f7; background: white; color: #4fc3f7;
-      border-radius: 20px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
+    .container { max-width: 1150px; margin: 0 auto; }
+    header {
+      color: #f8fafc;
+      margin-bottom: 18px;
+      text-align: center;
     }
-    .filter-btn:hover, .filter-btn.active { background: #4fc3f7; color: white; }
-    
-    .internship-list { display: grid; gap: 20px; }
-    .internship-card {
-      background: rgba(255,255,255,0.95); border-radius: 16px; padding: 24px;
-      display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s;
+    header h1 { font-size: 2rem; margin-bottom: 8px; }
+    header p { color: #cbd5e1; }
+
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 960px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      .full { grid-column: 1 / -1; }
     }
-    .internship-card:hover { transform: translateY(-3px); }
-    
-    .card-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
-    .company-info { flex: 1; }
-    .company-name { font-size: 1.3rem; font-weight: bold; color: #1a1a2e; margin-bottom: 4px; }
-    .position { color: #4fc3f7; font-size: 1rem; font-weight: 600; }
-    .salary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; white-space: nowrap; }
-    
-    .description { color: #555; font-size: 0.9rem; line-height: 1.5; background: #f8f9fa; padding: 12px; border-radius: 8px; }
-    
-    .card-info { display: flex; gap: 20px; flex-wrap: wrap; color: #666; font-size: 0.85rem; }
-    .card-info span { display: flex; align-items: center; gap: 4px; }
-    
-    .deadline { color: #e53935; font-weight: 600; }
-    .deadline.urgent { color: #c62828; }
-    
-    .wechat-section { display: flex; align-items: center; gap: 10px; background: #e8f5e9; padding: 10px 14px; border-radius: 8px; flex-wrap: wrap; }
-    .wechat-icon { font-size: 1.2rem; }
-    .wechat-name { color: #2e7d32; font-weight: 600; font-size: 0.9rem; }
-    
-    .links-section { display: flex; gap: 10px; flex-wrap: wrap; }
-    .detail-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: #1976d2; text-decoration: none; font-size: 0.85rem;
-      background: #e3f2fd; padding: 8px 14px; border-radius: 6px;
+
+    .card {
+      background: rgba(248, 250, 252, 0.98);
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
     }
-    .detail-link:hover { background: #bbdefb; }
-    .apply-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: linear-gradient(135deg, #667eea, #764ba2); color: white;
-      padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold;
+
+    .card h2 {
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+      color: #0f172a;
     }
-    .apply-link:hover { opacity: 0.85; }
-    
-    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .tag { background: #e3f2fd; color: #1976d2; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; }
-    .tag.highlight { background: #e8f5e9; color: #388e3c; }
-    .category-tag { background: #1a1a2e; color: white; }
-    
-    .no-result { text-align: center; padding: 40px; color: white; background: rgba(255,255,255,0.1); border-radius: 12px; }
-    
-    @media (max-width: 768px) {
-      .card-header { flex-direction: column; }
-      .salary { align-self: flex-start; }
-      .links-section { flex-direction: column; }
-      .detail-link, .apply-link { width: 100%; justify-content: center; }
+
+    .row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
+    label { color: #334155; font-size: 0.86rem; font-weight: 600; }
+
+    input, textarea, button, select {
+      font: inherit;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      padding: 10px 12px;
+      background: #fff;
     }
+    textarea { min-height: 92px; resize: vertical; }
+    button {
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      color: #fff;
+      font-weight: 600;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    button:hover { transform: translateY(-1px); opacity: 0.92; }
+    .btn-secondary { background: #475569; }
+    .btn-danger { background: #dc2626; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .stat {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px;
+      background: #f8fafc;
+      text-align: center;
+    }
+    .stat .num { font-size: 1.5rem; font-weight: 700; color: #1d4ed8; }
+    .stat .txt { font-size: 0.82rem; color: #475569; }
+
+    .list { display: grid; gap: 10px; margin-top: 12px; }
+    .item {
+      border: 1px solid #dbeafe;
+      background: #eff6ff;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .item-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .item-title { font-weight: 700; color: #1e293b; }
+    .item-meta { color: #475569; font-size: 0.84rem; }
+    .item-summary {
+      margin-top: 8px;
+      padding: 8px;
+      border-left: 3px solid #2563eb;
+      background: #fff;
+      color: #334155;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .chip {
+      background: #e2e8f0;
+      color: #334155;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+    }
+
+    .muted { color: #64748b; font-size: 0.88rem; }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>🚀 2026暑期实习信息汇总</h1>
-      <p>每日8点自动更新 | 金融 · 互联网 · 实体企业 · 管培生</p>
+      <h1>🗂️ 公众号每日推送整理与提炼</h1>
+      <p>录入指定公众号文章，自动生成简版摘要与关键词洞察。</p>
     </header>
-    
-    <div class="stats">
-      <div class="stat-card"><div class="number" id="totalCount">0</div><div class="label">总岗位</div></div>
-      <div class="stat-card"><div class="number" id="beijingCount">0</div><div class="label">北京</div></div>
-      <div class="stat-card"><div class="number" id="shanghaiCount">0</div><div class="label">上海</div></div>
-      <div class="stat-card"><div class="number" id="gzCount">0</div><div class="label">广深</div></div>
-      <div class="stat-card"><div class="number" id="hkCount">0</div><div class="label">香港</div></div>
-    </div>
-    
-    <div class="update-time">数据最后更新: <span id="lastUpdate">2026-02-15</span></div>
-    
-    <div class="filters">
-      <h3>🔍 筛选</h3>
-      <div class="filter-section">
-        <div class="filter-section-title">领域</div>
-        <div class="filter-group" id="categoryFilters">
-          <button class="filter-btn active" data-filter="all">全部</button>
-          <button class="filter-btn" data-filter="互联网">互联网</button>
-          <button class="filter-btn" data-filter="金融">金融</button>
-          <button class="filter-btn" data-filter="实体企业">实体企业</button>
-          <button class="filter-btn" data-filter="管培生">管培生</button>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1) 目标公众号设置</h2>
+        <div class="row">
+          <div class="field">
+            <label for="accountName">公众号名称</label>
+            <input id="accountName" placeholder="例如：XX行业观察" />
+          </div>
+          <div class="field">
+            <label for="updateTime">每日更新时间</label>
+            <input id="updateTime" placeholder="例如：08:00" />
+          </div>
         </div>
-      </div>
-      <div class="filter-section">
-        <div class="filter-section-title">地区</div>
-        <div class="filter-group" id="locationFilters">
-          <button class="filter-btn active" data-filter="all">全部</button>
-          <button class="filter-btn" data-filter="北京">北京</button>
-          <button class="filter-btn" data-filter="上海">上海</button>
-          <button class="filter-btn" data-filter="深圳">深圳</button>
-          <button class="filter-btn" data-filter="广州">广州</button>
-          <button class="filter-btn" data-filter="香港">香港</button>
+        <div class="row" style="margin-top: 10px;">
+          <button id="saveConfig">保存配置</button>
+          <button id="resetAll" class="btn-danger">清空全部数据</button>
         </div>
-      </div>
+        <p id="configHint" class="muted" style="margin-top: 8px;">尚未保存配置。</p>
+      </section>
+
+      <section class="card">
+        <h2>2) 每日推送录入</h2>
+        <div class="field">
+          <label for="postTitle">文章标题</label>
+          <input id="postTitle" placeholder="输入当天推送标题" />
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="field">
+            <label for="postDate">发布日期</label>
+            <input id="postDate" type="date" />
+          </div>
+          <div class="field">
+            <label for="postTag">主题标签</label>
+            <select id="postTag">
+              <option>行业动态</option>
+              <option>政策解读</option>
+              <option>公司分析</option>
+              <option>投研方法</option>
+              <option>其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" style="margin-top: 10px;">
+          <label for="postContent">正文或摘录（越完整，提炼越准）</label>
+          <textarea id="postContent" placeholder="粘贴公众号推送内容（可部分摘录）"></textarea>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <button id="addPost">添加并提炼</button>
+        </div>
+      </section>
+
+      <section class="card full">
+        <h2>3) 提炼总览</h2>
+        <div class="stats">
+          <div class="stat"><div class="num" id="totalPosts">0</div><div class="txt">累计文章</div></div>
+          <div class="stat"><div class="num" id="todayPosts">0</div><div class="txt">今日新增</div></div>
+          <div class="stat"><div class="num" id="avgLength">0</div><div class="txt">平均字数</div></div>
+          <div class="stat"><div class="num" id="policyRate">0%</div><div class="txt">政策解读占比</div></div>
+        </div>
+
+        <h3 style="margin-top: 12px; font-size: 1rem;">高频关键词</h3>
+        <div id="keywords" class="chips"></div>
+
+        <h3 style="margin-top: 12px; font-size: 1rem;">推送列表（含自动提炼）</h3>
+        <div id="postList" class="list"></div>
+      </section>
     </div>
-    
-    <div class="internship-list" id="internshipList"></div>
   </div>
 
   <script>
-    const internships = [
-      // 互联网 - 大厂暑期实习
-      {id:1,company:"字节跳动",position:"2026暑期实习",salary:"400-600/天",location:"北京/上海/杭州",duration:"3个月",requirements:"本科及以上",category:"互联网",tags:["大厂","暑期实习"],region:"大陆",description:"技术/产品/运营多岗位，字节跳动官方暑期实习项目",deadline:"2026-03-31",wechatOfficial:"字节跳动招聘",detailLink:"https://jobs.bytedance.com/",applicationLink:"https://jobs.bytedance.com/"},
-      {id:2,company:"腾讯",position:"2026暑期实习",salary:"400-600/天",location:"深圳/北京/上海",duration:"3个月",requirements:"本科及以上",category:"互联网",tags:["大厂","暑期实习"],region:"大陆",description:"技术/产品/运营岗位，微信、QQ等核心业务",deadline:"2026-03-31",wechatOfficial:"腾讯招聘",detailLink:"https://careers.tencent.com/",applicationLink:"https://careers.tencent.com/"},
-      {id:3,company:"阿里巴巴",position:"2026暑期实习",salary:"400-600/天",location:"杭州/北京",duration:"3个月",requirements:"本科及以上",category:"互联网",tags:["大厂","暑期实习"],region:"大陆",description:"阿里云/淘天集团/国际数字商业多岗位",deadline:"2026-03-20",wechatOfficial:"阿里巴巴招聘",detailLink:"https://campus.alibaba.com/",applicationLink:"https://campus.alibaba.com/"},
-      {id:4,company:"百度",position:"2026暑期实习",salary:"400-600/天",location:"北京",duration:"3个月",requirements:"本科及以上",category:"互联网",tags:["大厂","暑期实习"],region:"大陆",description:"AI/自动驾驶/智能云方向技术岗位",deadline:"2026-04-15",wechatOfficial:"百度招聘",detailLink:"https://join.baidu.com/",applicationLink:"https://join.baidu.com/"},
-      {id:5,company:"美团",position:"2026暑期实习",salary:"300-500/天",location:"北京",duration:"3个月",requirements:"本科及以上",category:"互联网",tags:["大厂","暑期实习"],region:"大陆",description:"到店/到家/酒旅业务技术产品岗位",deadline:"2026-03-31",wechatOfficial:"美团招聘",detailLink:"https://campus.meituan.com/",applicationLink:"https://campus.meituan.com/"},
-      {id:6,company:"快手",position:"2026暑期实习",salary:"300-500/天",location:"北京",duration:"3个月",requirements:"本科及以上",category:"互联网",tags:["大厂","暑期实习"],region:"大陆",description:"算法/工程/产品/运营岗位",deadline:"2026-04-01",wechatOfficial:"快手招聘",detailLink:"https://campus.kuaishou.com/",applicationLink:"https://campus.kuaishou.com/"},
-      
-      // 金融 - 暑期实习项目
-      {id:7,company:"中金公司",position:"2026暑期实习",salary:"200-300/天",location:"北京/上海",duration:"3-6个月",requirements:"硕士及以上",category:"金融",tags:["头部券商","暑期实习"],region:"大陆",description:"投资银行部/研究部/固定收益部暑期实习",deadline:"2026-02-28",wechatOfficial:"中金Career",detailLink:"https://www.cicc.com.cn/zh/career/campus",applicationLink:"https://www.cicc.com.cn/"},
-      {id:8,company:"摩根大通",position:"Summer Analyst 2026",salary:"8000-12000/月",location:"上海",duration:"6个月",requirements:"本科及以上",category:"金融",tags:["外资","暑期项目"],region:"大陆",description:"全球投行暑期项目，表现优异可获全职Offer",deadline:"2026-02-28",wechatOfficial:"JP Morgan Careers",detailLink:"https://www.jpmorgan.com/careers/students",applicationLink:"https://www.jpmorgan.com/careers/students"},
-      {id:9,company:"高盛",position:"Summer Analyst",salary:"10000+/月",location:"北京/上海",duration:"8-10周",requirements:"在校大学生",category:"金融",tags:["外资","暑期项目"],region:"大陆",description:"全球顶级投行暑期实习，2月截止",deadline:"2026-02-15",wechatOfficial:"Goldman Sachs",detailLink:"https://www.goldmansachs.com/careers/students-and-graduates",applicationLink:"https://www.goldmansachs.com/careers/students-and-graduates"},
-      {id:10,company:"汇丰银行",position:"暑期实习计划",salary:"300-400/天",location:"上海/北京/广州",duration:"6-8周",requirements:"本科及以上",category:"金融",tags:["外资","暑期项目"],region:"大陆",description:"HSBC Summer Intern，商业银行方向",deadline:"2026-03-01",wechatOfficial:"汇丰中国招聘",detailLink:"https://www.hsbc.com/careers/students",applicationLink:"https://www.hsbc.com/careers/students"},
-      {id:11,company:"安永",position:"2026暑期实习",salary:"100-200/天",location:"北京/上海/广州/深圳",duration:"6-8周",requirements:"本科及以上",category:"金融",tags:["四大","暑期实习"],region:"大陆",description:"审计/税务/咨询暑期实习项目",deadline:"2026-03-31",wechatOfficial:"安永招聘",detailLink:"https://www.ey.com/careers/students",applicationLink:"https://www.ey.com/careers/students"},
-      {id:12,company:"普华永道",position:"2026暑期实习",salary:"100-200/天",location:"北京/上海/广州/深圳",duration:"6周",requirements:"本科及以上",category:"金融",tags:["四大","暑期实习"],region:"大陆",description:"审计/咨询暑期实习，有转正机会",deadline:"2026-03-31",wechatOfficial:"普华永道招聘",detailLink:"https://www.pwc.com/careers/students",applicationLink:"https://www.pwc.com/careers/students"},
-      {id:13,company:"德勤",position:"2026暑期实习",salary:"100-200/天",location:"北京/上海/广州/深圳",duration:"6-8周",requirements:"本科及以上",category:"金融",tags:["四大","暑期实习"],region:"大陆",description:"审计/咨询/税务暑期实习",deadline:"2026-03-31",wechatOfficial:"德勤招聘",detailLink:"https://www2.deloitte.com/careers/students",applicationLink:"https://www2.deloitte.com/careers/students"},
-      
-      // 实体企业
-      {id:14,company:"华为",position:"2026暑期实习",salary:"300-400/天",location:"深圳/北京/上海",duration:"3-6个月",requirements:"本科及以上",category:"实体企业",tags:["大厂","暑期实习"],region:"大陆",description:"2012实验室/云计算/5G等研发岗位",deadline:"2026-04-15",wechatOfficial:"华为招聘",detailLink:"https://career.huawei.com/",applicationLink:"https://career.huawei.com/"},
-      {id:15,company:"大疆",position:"2026暑期实习",salary:"400-600/天",location:"深圳",duration:"3个月",requirements:"本科及以上",category:"实体企业",tags:["科技","暑期实习"],region:"大陆",description:"算法/硬件/嵌入式研发岗位",deadline:"2026-03-31",wechatOfficial:"DJI大疆招聘",detailLink:"https://career.dji.com/",applicationLink:"https://career.dji.com/"},
-      {id:16,company:"比亚迪",position:"2026暑期实习",salary:"200-300/天",location:"深圳/西安",duration:"3个月",requirements:"本科及以上",category:"实体企业",tags:["新能源","暑期实习"],region:"大陆",description:"新能源汽车/电池技术研发",deadline:"2026-04-30",wechatOfficial:"比亚迪招聘",detailLink:"https://career.byd.com/",applicationLink:"https://career.byd.com/"},
-      
-      // 管培生/快消
-      {id:17,company:"联合利华",position:"2026暑期管培生",salary:"300-400/天",location:"上海/北京",duration:"8-10周",requirements:"本科及以上",category:"管培生",tags:["外企","快消","暑期实习"],region:"大陆",description:"UFLY Summer Intern，快消核心部门体验",deadline:"2026-02-28",wechatOfficial:"联合利华招聘",detailLink:"https://www.unilever.com/careers/students-and-graduates/",applicationLink:"https://www.unilever.com/careers/students-and-graduates/"},
-      {id:18,company:"宝洁",position:"2026暑期实习",salary:"350-450/天",location:"广州/上海/北京",duration:"8周",requirements:"本科及以上",category:"管培生",tags:["外企","快消","暑期实习"],region:"大陆",description:"CBD/研发/供应链暑期实习",deadline:"2026-02-20",wechatOfficial:"宝洁招聘",detailLink:"https://www.pg.com/careers/",applicationLink:"https://www.pg.com/careers/"},
-      {id:19,company:"欧莱雅",position:"2026暑期实习",salary:"300/天",location:"上海/北京",duration:"6周",requirements:"本科及以上",category:"管培生",tags:["外企","快消","暑期实习"],region:"大陆",description:"市场/电商/研发暑期实习",deadline:"2026-02-25",wechatOfficial:"欧莱雅招聘",detailLink:"https://www.loreal.com/careers/students-and-graduates",applicationLink:"https://www.loreal.com/careers/students-and-graduates"},
-      {id:20,company:"玛氏",position:"2026暑期管理实习",salary:"300-400/天",location:"广州/上海",duration:"8周",requirements:"本科及以上",category:"管培生",tags:["外企","快消","暑期实习"],region:"大陆",description:"玛氏箭牌/宠物护理管理培训生",deadline:"2026-02-28",wechatOfficial:"玛氏招聘",detailLink:"https://www.mars.com/careers/students",applicationLink:"https://www.mars.com/careers/students"}
-    ];
+    const STORAGE_KEY = 'wechat_digest_data_v1';
+    const stopWords = new Set(['我们','你们','他们','这个','那个','以及','但是','因为','所以','一个','一些','可以','进行','对于','通过','如果','已经','主要','关于','相关','今天','发布','内容','文章','公众号','分析','提出','表示','显示','其中','需要']);
 
-    let currentCategory = 'all';
-    let currentLocation = 'all';
+    const state = {
+      config: { accountName: '', updateTime: '' },
+      posts: []
+    };
 
-    function isUrgent(deadline) {
-      const today = new Date('2026-02-15');
-      const d = new Date(deadline);
-      const days = Math.ceil((d - today) / (1000*60*60*24));
-      return days <= 15;
+    function loadState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed.config) state.config = parsed.config;
+        if (Array.isArray(parsed.posts)) state.posts = parsed.posts;
+      } catch (e) {
+        console.warn('解析缓存失败', e);
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function extractSummary(text) {
+      const cleaned = text.replace(/\s+/g, ' ').trim();
+      if (!cleaned) return '（暂无内容可提炼）';
+      const parts = cleaned.split(/[。！？!?]/).map(s => s.trim()).filter(Boolean);
+      const top = parts.slice(0, 2).join('；');
+      return top || cleaned.slice(0, 100);
+    }
+
+    function extractKeywords(text) {
+      const words = text.match(/[\u4e00-\u9fa5]{2,}/g) || [];
+      const freq = {};
+      words.forEach(w => {
+        if (stopWords.has(w)) return;
+        freq[w] = (freq[w] || 0) + 1;
+      });
+      return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([word]) => word);
+    }
+
+    function aggregateKeywords(posts) {
+      const freq = {};
+      posts.forEach(post => {
+        (post.keywords || []).forEach(k => { freq[k] = (freq[k] || 0) + 1; });
+      });
+      return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 12);
     }
 
     function updateStats() {
-      document.getElementById('totalCount').textContent = internships.length;
-      document.getElementById('beijingCount').textContent = internships.filter(i => i.location.includes('北京')).length;
-      document.getElementById('shanghaiCount').textContent = internships.filter(i => i.location.includes('上海')).length;
-      document.getElementById('gzCount').textContent = internships.filter(i => i.location.includes('深圳') || i.location.includes('广州')).length;
-      document.getElementById('hkCount').textContent = internships.filter(i => i.location.includes('香港')).length;
+      const total = state.posts.length;
+      const today = new Date().toISOString().slice(0, 10);
+      const todayCount = state.posts.filter(p => p.date === today).length;
+      const avg = total ? Math.round(state.posts.reduce((sum, p) => sum + p.length, 0) / total) : 0;
+      const policyCount = state.posts.filter(p => p.tag === '政策解读').length;
+      const policyRate = total ? Math.round((policyCount / total) * 100) : 0;
+
+      document.getElementById('totalPosts').textContent = total;
+      document.getElementById('todayPosts').textContent = todayCount;
+      document.getElementById('avgLength').textContent = avg;
+      document.getElementById('policyRate').textContent = policyRate + '%';
+
+      const keywordWrap = document.getElementById('keywords');
+      const topKeywords = aggregateKeywords(state.posts);
+      keywordWrap.innerHTML = topKeywords.length
+        ? topKeywords.map(([k, n]) => `<span class="chip">${k} × ${n}</span>`).join('')
+        : '<span class="muted">暂无关键词，请先录入推送。</span>';
     }
 
-    function renderList() {
-      const list = document.getElementById('internshipList');
-      let filtered = internships;
-      if (currentCategory !== 'all') filtered = filtered.filter(i => i.category === currentCategory);
-      if (currentLocation !== 'all') filtered = filtered.filter(i => i.location.includes(currentLocation));
-      
-      if (filtered.length === 0) {
-        list.innerHTML = '<div class="no-result">暂无符合条件的实习信息</div>';
+    function renderPosts() {
+      const list = document.getElementById('postList');
+      if (state.posts.length === 0) {
+        list.innerHTML = '<p class="muted">尚无推送记录。请先添加一篇文章。</p>';
         return;
       }
-      
-      list.innerHTML = filtered.map(item => `
-        <div class="internship-card">
-          <div class="card-header">
-            <div class="company-info">
-              <div class="company-name">${item.company}</div>
-              <div class="position">${item.position}</div>
+      list.innerHTML = state.posts
+        .slice()
+        .sort((a, b) => b.createdAt - a.createdAt)
+        .map(post => `
+          <article class="item">
+            <div class="item-head">
+              <div>
+                <div class="item-title">${post.title}</div>
+                <div class="item-meta">${post.date} · ${post.tag} · ${post.length} 字</div>
+              </div>
+              <button class="btn-secondary" data-id="${post.id}">删除</button>
             </div>
-            <div class="salary">${item.salary}</div>
-          </div>
-          
-          <div class="description">${item.description}</div>
-          
-          <div class="card-info">
-            <span>📍 ${item.location}</span>
-            <span>⏱️ ${item.duration}</span>
-            <span>🎓 ${item.requirements}</span>
-            <span class="deadline ${isUrgent(item.deadline) ? 'urgent' : ''}">📌 截止: ${item.deadline}</span>
-          </div>
-          
-          <div class="wechat-section">
-            <span class="wechat-icon">📱</span>
-            <span class="wechat-name">公众号: ${item.wechatOfficial}</span>
-          </div>
-          
-          <div class="links-section">
-            <a href="${item.detailLink}" target="_blank" class="detail-link">📄 查看岗位详情</a>
-            <a href="${item.applicationLink}" target="_blank" class="apply-link">🚀 投递简历</a>
-          </div>
-          
-          <div class="tags">
-            <span class="tag category-tag">${item.category}</span>
-            ${item.tags.map(tag => `<span class="tag ${tag === '暑期实习' || tag === '大厂' || tag === '暑期项目' ? 'highlight' : ''}">${tag}</span>`).join('')}
-          </div>
-        </div>
-      `).join('');
+            <div class="item-summary">💡 提炼：${post.summary}</div>
+            <div class="chips">
+              ${(post.keywords || []).map(k => `<span class="chip">${k}</span>`).join('') || '<span class="muted">无关键词</span>'}
+            </div>
+          </article>
+        `)
+        .join('');
     }
 
-    document.getElementById('categoryFilters').addEventListener('click', e => {
-      if (e.target.classList.contains('filter-btn')) {
-        document.querySelectorAll('#categoryFilters .filter-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        currentCategory = e.target.dataset.filter;
-        renderList();
-      }
+    function syncConfigToForm() {
+      document.getElementById('accountName').value = state.config.accountName || '';
+      document.getElementById('updateTime').value = state.config.updateTime || '';
+      const hint = state.config.accountName
+        ? `当前追踪：${state.config.accountName}（每日 ${state.config.updateTime || '--:--'}）`
+        : '尚未保存配置。';
+      document.getElementById('configHint').textContent = hint;
+    }
+
+    document.getElementById('saveConfig').addEventListener('click', () => {
+      state.config.accountName = document.getElementById('accountName').value.trim();
+      state.config.updateTime = document.getElementById('updateTime').value.trim();
+      saveState();
+      syncConfigToForm();
     });
 
-    document.getElementById('locationFilters').addEventListener('click', e => {
-      if (e.target.classList.contains('filter-btn')) {
-        document.querySelectorAll('#locationFilters .filter-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        currentLocation = e.target.dataset.filter;
-        renderList();
+    document.getElementById('addPost').addEventListener('click', () => {
+      const title = document.getElementById('postTitle').value.trim();
+      const date = document.getElementById('postDate').value;
+      const tag = document.getElementById('postTag').value;
+      const content = document.getElementById('postContent').value.trim();
+
+      if (!title || !date || !content) {
+        alert('请至少填写标题、日期和正文摘录。');
+        return;
       }
+
+      const post = {
+        id: Date.now(),
+        title,
+        date,
+        tag,
+        content,
+        length: content.length,
+        summary: extractSummary(content),
+        keywords: extractKeywords(content),
+        createdAt: Date.now()
+      };
+
+      state.posts.push(post);
+      saveState();
+      updateStats();
+      renderPosts();
+
+      document.getElementById('postTitle').value = '';
+      document.getElementById('postContent').value = '';
     });
 
+    document.getElementById('postList').addEventListener('click', (e) => {
+      if (e.target.tagName !== 'BUTTON') return;
+      const id = Number(e.target.dataset.id);
+      state.posts = state.posts.filter(post => post.id !== id);
+      saveState();
+      updateStats();
+      renderPosts();
+    });
+
+    document.getElementById('resetAll').addEventListener('click', () => {
+      if (!confirm('确定清空所有配置与推送记录吗？')) return;
+      state.config = { accountName: '', updateTime: '' };
+      state.posts = [];
+      saveState();
+      syncConfigToForm();
+      updateStats();
+      renderPosts();
+    });
+
+    loadState();
+    syncConfigToForm();
     updateStats();
-    renderList();
+    renderPosts();
   </script>
 </body>
 </html>
